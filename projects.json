@@ -2,11 +2,11 @@
   {
     "titulo": "Carrinho Explorador (Ultrassom + Desvio)",
     "descricao": "Robô autônomo que mede distância (HC‑SR04) e desvia de obstáculos com a ponte H L298N.",
-    "repo": "https://github.com/SEU_USUARIO/carrinho-explorador",
+    "repo": "https://github.com/wsoaresjr/carrinho-explorador",
     "imagem": "assets/capas/carrinho-explorador.jpg",
     "tags": ["Arduino", "HC-SR04", "L298N", "OBR"],
     "status": "Em aula",
-    "demo": "https://SEU_USUARIO.github.io/carrinho-explorador/"
+    "demo": "https://wsoaresjr.github.io/carrinho-explorador/"
   },
   {
     "titulo": "Telemetria com ESP8266 (ESP-01s)",
