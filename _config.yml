@@ -1,0 +1,36 @@
+title: "Projetos de Robótica"
+description: "Catálogo de projetos em formato de posts — Exploratória Digital"
+
+# Tema padrão suportado pelo GitHub Pages
+theme: minima
+
+# Links sociais
+minima:
+  skin: auto
+  social_links:
+    - platform: github
+      user_url: https://github.com/wsoaresjr
+    - platform: website
+      user_url: https://exploratoriadigital.com.br
+
+# Autor
+author:
+  name: "Exploratória Digital"
+  email: "contato@exploratoriadigital.com.br"
+
+# URLs — importante para site de projeto!
+url: "https://wsoaresjr.github.io"
+baseurl: "/robotica-projetos"   # <--- troque pelo nome real do repositório
+
+# Markdown e permalink
+markdown: kramdown
+permalink: /projetos/:year/:month/:day/:title/
+
+# Incluir a pasta assets
+include:
+  - assets
+
+# Plugins suportados pelo GitHub Pages
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
