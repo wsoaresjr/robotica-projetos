@@ -1,10 +1,8 @@
 title: "Projetos de Robótica"
 description: "Catálogo de projetos em formato de posts — Exploratória Digital"
 
-# Tema padrão suportado pelo GitHub Pages
 theme: minima
 
-# Links sociais
 minima:
   skin: auto
   social_links:
@@ -13,24 +11,47 @@ minima:
     - platform: website
       user_url: https://exploratoriadigital.com.br
 
-# Autor
 author:
   name: "Exploratória Digital"
   email: "contato@exploratoriadigital.com.br"
 
-# URLs — importante para site de projeto!
+# ⚙️ Site de projeto
 url: "https://wsoaresjr.github.io"
-baseurl: "/robotica-projetos"   # <--- troque pelo nome real do repositório
+baseurl: "/robotica-projetos"
 
-# Markdown e permalink
+# 🕒 Fuso horário (evita posts “do futuro” sumirem)
+timezone: America/Sao_Paulo
+lang: pt-BR
+
+# ✍️ Markdown & permalinks
 markdown: kramdown
+kramdown:
+  input: GFM        # tabelas/listas no estilo GitHub
+highlighter: rouge  # destaque de código
 permalink: /projetos/:year/:month/:day/:title/
 
-# Incluir a pasta assets
+# 📦 Inclui estáticos
 include:
   - assets
 
-# Plugins suportados pelo GitHub Pages
+# 🧠 Defaults: todo post já usa layout "post"
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: post
+
+# 🔌 Plugins suportados pelo GitHub Pages
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-sitemap
+
+# 🧹 Opcional: ignora coisas que não precisam ir pro build
+exclude:
+  - node_modules
+  - package.json
+  - package-lock.json
+  - README.md
+  - .DS_Store
