@@ -1,4 +1,3 @@
-# Arquivo: _posts/_TEMPLATE-NOVO-PROJETO.md (modelo para duplicar)
 ---
 layout: post
 # ⬇ Altere o título
