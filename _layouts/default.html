@@ -1,0 +1,81 @@
+# Arquivo: _layouts/default.html
+<!doctype html>
+<html lang="pt-br" class="scroll-smooth" data-theme>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ page.title }} — {{ site.title }}</title>
+  {%- seo -%}
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Tailwind config inline: cores sutis + modo escuro
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50:'#ecfeff',100:'#cffafe',200:'#a5f3fc',300:'#67e8f9',400:'#22d3ee',500:'#06b6d4',600:'#0891b2',700:'#0e7490',800:'#155e75',900:'#164e63'
+            }
+          }
+        }
+      },
+      darkMode: 'class',
+    }
+  </script>
+  <style>
+    /* Tipografia agradável sem plugin typography */
+    .content p{ @apply text-slate-700 dark:text-slate-300 leading-7 mb-4; }
+    .content h2{ @apply text-2xl font-bold mt-8 mb-3 text-slate-900 dark:text-white; }
+    .content h3{ @apply text-xl font-semibold mt-6 mb-2 text-slate-900 dark:text-white; }
+    .content ul{ @apply list-disc pl-6 mb-4; }
+    .content ol{ @apply list-decimal pl-6 mb-4; }
+    .content a{ @apply text-brand-700 hover:underline; }
+    .pill{ @apply text-xs px-2 py-1 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300; }
+  </style>
+  <script>
+    // ===== Tema (dark/light) com persistência =====
+    (function(){
+      const root = document.documentElement;
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const useDark = saved ? saved === 'dark' : prefersDark;
+      root.classList.toggle('dark', useDark);
+    })();
+    function toggleTheme(){
+      const root = document.documentElement;
+      const isDark = root.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+  </script>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100">
+  <!-- Header -->
+  <header class="sticky top-0 z-50 backdrop-blur bg-white/80 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="{{ site.baseurl }}/" class="flex items-center gap-2">
+        <span class="text-xl font-extrabold">Robótica</span>
+        <span class="text-slate-500 dark:text-slate-400">/ Projetos</span>
+      </a>
+      <nav class="hidden sm:flex items-center gap-5 text-sm">
+        <a class="hover:underline" href="{{ site.baseurl }}/">Home</a>
+        <a class="hover:underline" href="#tags">Tags</a>
+        <a class="hover:underline" href="https://github.com/{{ site.minima.social_links | where: 'platform','github' | map: 'user_url' | first | split: '/' | last }}" target="_blank" rel="noopener">GitHub</a>
+        <button onclick="toggleTheme()" class="px-3 py-1 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800">Alternar tema</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="max-w-6xl mx-auto px-4 py-10">
+    {{ content }}
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 dark:border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 py-8 text-sm text-slate-600 dark:text-slate-400">
+      © {{ "now" | date: "%Y" }} {{ site.title }} — Publicado com GitHub Pages / Jekyll
+    </div>
+  </footer>
+</body>
+</html>

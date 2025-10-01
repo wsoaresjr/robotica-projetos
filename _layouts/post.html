@@ -1,0 +1,27 @@
+# Arquivo: _layouts/post.html
+---
+layout: default
+---
+<article class="bg-white dark:bg-slate-950 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+{% if page.image %}
+<div class="aspect-video bg-slate-100 dark:bg-slate-800 overflow-hidden">
+<img src="{{ site.baseurl }}{{ page.image }}" alt="{{ page.title }}" class="w-full h-full object-cover">
+</div>
+{% endif %}
+<div class="p-6 sm:p-8">
+<h1 class="text-3xl font-bold mb-3">{{ page.title }}</h1>
+{% if page.tags %}
+<div class="flex flex-wrap gap-2 mb-3">
+{% for t in page.tags %}<span class="pill">{{ t }}</span>{% endfor %}
+</div>
+{% endif %}
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-6">Publicado em {{ page.date | date: "%d/%m/%Y" }}</p>
+<div class="content">{{ content }}</div>
+<hr class="my-8 border-slate-200 dark:border-slate-800"/>
+<div class="grid sm:grid-cols-2 gap-4 text-sm">
+{% if page.repo %}<a class="text-brand-700 dark:text-brand-300 hover:underline" href="{{ page.repo }}" target="_blank" rel="noopener">Ver repositório →</a>{% endif %}
+{% if page.demo %}<a class="text-brand-700 dark:text-brand-300 hover:underline" href="{{ page.demo }}" target="_blank" rel="noopener">Ver demo →</a>{% endif %}
+</div>
+<a href="{{ site.baseurl }}/" class="inline-block mt-8 text-brand-700 dark:text-brand-300 hover:underline">← Voltar para a lista</a>
+</div>
+</article>

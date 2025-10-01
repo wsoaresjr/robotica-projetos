@@ -1,55 +1,73 @@
----
-layout: default
-title: "Projetos de Robótica"
----
-
-<section class="page-hero" style="padding: 2rem 0;">
-  <h1 style="margin:0;">Catálogo de Projetos de Robótica</h1>
-  <p style="color:#6b7280; max-width: 56ch;">
-    Cada projeto abaixo é um post: capa, descrição, materiais, links de repositório e demo.
-  </p>
-</section>
-
-<input id="busca" type="search" placeholder="Buscar por nome ou tags…" style="width:100%; max-width:420px; padding:.6rem .8rem; border-radius:12px; border:1px solid #e5e7eb; margin:.5rem 0 1.5rem;" />
-
-<div id="grid" class="cards" style="display:grid; gap:1rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
-  {% for post in site.posts %}
-    <article class="card" data-text="{{ post.title | downcase }} {{ post.tags | join: ' ' | downcase }}" style="border:1px solid #e5e7eb; border-radius:16px; overflow:hidden;">
-      <a href="{{ site.baseurl }}{{ post.url }}" style="text-decoration:none; color:inherit;">
-        {% if post.image %}
-          <div style="aspect-ratio:16/9; background:#f1f5f9; overflow:hidden;">
-            <img src="{{ site.baseurl }}{{ post.image }}" alt="{{ post.title }}" style="width:100%; height:100%; object-fit:cover;">
-          </div>
-        {% endif %}
-        <div style="padding:1rem;">
-          <h3 style="margin:.25rem 0 0;">{{ post.title }}</h3>
-          {% if post.excerpt %}
-            <p style="color:#6b7280; font-size:.95rem; margin:.5rem 0 1rem;">{{ post.excerpt | strip_html | truncate: 120 }}</p>
-          {% endif %}
-          {% if post.tags %}
-            <div style="display:flex; gap:.4rem; flex-wrap:wrap; margin-bottom:.5rem;">
-              {% for t in post.tags %}
-                <span style="font-size:.75rem; padding:.2rem .5rem; border:1px solid #e5e7eb; border-radius:999px; background:#f8fafc;">{{ t }}</span>
-              {% endfor %}
-            </div>
-          {% endif %}
-          <span style="color:#64748b; font-size:.85rem;">Publicado em {{ post.date | date: "%d/%m/%Y" }}</span>
-        </div>
-      </a>
-    </article>
-  {% endfor %}
+# Arquivo: index.md (homepage com Tailwind, busca e "tags populares")
+<article class="card bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden hover:shadow-lg transition">
+<a href="{{ site.baseurl }}{{ post.url }}" class="block">
+{% if post.image %}
+<div class="aspect-video bg-slate-100 dark:bg-slate-800 overflow-hidden">
+<img src="{{ site.baseurl }}{{ post.image }}" alt="{{ post.title }}" class="w-full h-full object-cover"/>
+</div>
+{% endif %}
+<div class="p-4">
+<h3 class="font-bold text-lg">{{ post.title }}</h3>
+{% if post.excerpt %}
+<p class="text-slate-600 dark:text-slate-400 text-sm mt-1 mb-3">{{ post.excerpt | strip_html | truncate: 130 }}</p>
+{% endif %}
+{% if post.tags %}
+<div class="flex flex-wrap gap-2 mb-2">
+{% for t in post.tags %}<span class="pill">{{ t }}</span>{% endfor %}
+</div>
+{% endif %}
+<span class="text-slate-500 dark:text-slate-400 text-xs">{{ post.date | date: "%d/%m/%Y" }}</span>
+</div>
+</a>
+</article>
+{% endfor %}
 </div>
 
+
+<div id="empty" class="hidden text-slate-600 dark:text-slate-400 border border-dashed border-slate-300 dark:border-slate-700 rounded-xl p-6 mt-6">Nenhum projeto encontrado para esse termo/tag.</div>
+
+
 <script>
-  (function () {
-    const input = document.getElementById('busca');
-    const cards = Array.from(document.querySelectorAll('.card'));
-    input?.addEventListener('input', function () {
-      const q = (this.value || '').toLowerCase();
-      cards.forEach(card => {
-        const txt = card.getAttribute('data-text') || '';
-        card.style.display = (!q || txt.includes(q)) ? '' : 'none';
-      });
-    });
-  })();
+(function(){
+const $q = document.getElementById('q');
+const $tag = document.getElementById('tag');
+const $grid = document.getElementById('grid');
+const $empty = document.getElementById('empty');
+
+
+function apply(){
+const q = ($q?.value||'').trim().toLowerCase();
+const tg = ($tag?.value||'').trim().toLowerCase();
+let visible = 0;
+Array.from($grid.children).forEach(card=>{
+const text = (card.textContent||'').toLowerCase();
+const okQ = !q || text.includes(q);
+const okT = !tg || text.includes(tg);
+const show = okQ && okT;
+card.style.display = show? '' : 'none';
+if(show) visible++;
+});
+$empty.classList.toggle('hidden', !!visible);
+}
+
+
+$q?.addEventListener('input', apply);
+$tag?.addEventListener('change', apply);
+
+
+// Clique em tags populares preenche o filtro
+document.querySelectorAll('[data-tag]').forEach(el=>{
+el.addEventListener('click', (e)=>{
+e.preventDefault();
+const t = el.getAttribute('data-tag')||'';
+const opt = Array.from($tag.options).find(o=>o.value===t);
+if(opt){ $tag.value = t; }
+apply();
+window.scrollTo({ top: document.getElementById('grid').offsetTop - 80, behavior: 'smooth' });
+});
+});
+
+
+apply();
+})();
 </script>
